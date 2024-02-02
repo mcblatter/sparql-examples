@@ -4,7 +4,7 @@ prefix owl: <http://www.w3.org/2002/07/owl#>
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 prefix up: <http://purl.uniprot.org/core/> 
 prefix faldo: <http://biohackathon.org/resource/faldo#>
-_:
+_:sparql_examples_prefixes
   a owl:Ontology ;
   rdfs:comment """This is a collection of SPARQL queries that are examples for use on different websites.""" ;
   owl:imports sh: ; #p: ;
@@ -156,111 +156,115 @@ _:prefix_glycan
 _:prefix_glyconnect
   sh:prefix "glyconnect" ;
   sh:namespace "https://purl.org/glyconnect/"^^xsd:anyURI .
-_: sh:declare _:prefix_uberon .
+_:sparql_examples_prefixes sh:declare _:prefix_uberon .
 _:prefix_uberon
   sh:prefix "uberon" ;
   sh:namespace "http://purl.obolibrary.org/obo/uo#"^^xsd:anyURI .
-_: sh:declare   _:prefix_patent .
+_:sparql_examples_prefixes sh:declare   _:prefix_patent .
 _:prefix_patent
   sh:prefix "patent" ;
   sh:namespace "http://data.epo.org/linked-data/def/patent/"^^xsd:anyURI .
-_: sh:declare   _:prefix_mnet .
+_:sparql_examples_prefixes sh:declare   _:prefix_mnet .
 _:prefix_mnet
   sh:prefix "mnet" ;
   sh:namespace "https://rdf.metanetx.org/mnet/"^^xsd:anyURI .
-_: sh:declare   _:prefix_mnx .
+_:sparql_examples_prefixes sh:declare   _:prefix_mnx .
 _:prefix_mnx
   sh:prefix "mnx" ;
   sh:namespace "https://rdf.metanetx.org/schema/"^^xsd:anyURI .
-_: sh:declare   _:prefix_sp .
+_:prefix_sp sh:declare   _:prefix_sp .
 _:prefix_sp
   sh:prefix "sp" ;
   sh:namespace "http://spinrdf.org/sp#"^^xsd:anyURI .
-_: sh:declare   _:prefix_eunis-species .
-_:prefix_eunis-species
+_:prefix_eunis_species sh:declare   _:prefix_eunis_species .
+_:prefix_eunis_species
   sh:prefix "eunisSpecies" ;
   sh:namespace "http://eunis.eea.europa.eu/rdf/species-schema.rdf#"^^xsd:anyURI .
-_: sh:declare   _:prefix_foaf .
+_:sparql_examples_prefixes sh:declare   _:prefix_foaf .
 _:prefix_foaf
   sh:prefix "foaf" ;
   sh:namespace "http://xmlns.com/foaf/0.1/"^^xsd:anyURI .
-_: sh:declare   _:prefix_genex .
+_:sparql_examples_prefixes sh:declare   _:prefix_genex .
 _:prefix_genex
   sh:prefix "genex" ;
   sh:namespace "http://purl.org/genex#"^^xsd:anyURI .
-_: sh:declare   _:prefix_lscr .
+_:sparql_examples_prefixes sh:declare   _:prefix_lscr .
 _:prefix_lscr
   sh:prefix "lscr" ;
   sh:namespace "http://purl.org/lscr#"^^xsd:anyURI .
-_: sh:declare   _:prefix_vg .
+_:sparql_examples_prefixes sh:declare   _:prefix_vg .
 _:prefix_vg
   sh:prefix "vg" ;
   sh:namespace "http://biohackathon.org/resource/vg#"^^xsd:anyURI .
-_: sh:declare   _:prefix_obo .
+_:sparql_examples_prefixes sh:declare   _:prefix_obo .
 _:prefix_obo
   sh:prefix "obo" ;
   sh:namespace "http://purl.obolibrary.org/obo/"^^xsd:anyURI .
-_: sh:declare   _:prefix_orth .
+_:sparql_examples_prefixes sh:declare   _:prefix_orth .
 _:prefix_orth 
   sh:prefix "orth" ;
   sh:namespace "http://purl.org/net/orth#"^^xsd:anyURI .
-_: sh:declare   _:prefix_insdc .
+_:sparql_examples_prefixes sh:declare   _:prefix_insdc .
 _:prefix_insdc 
   sh:prefix "insdc" ;
   sh:namespace "http://identifiers.org/insdc/"^^xsd:anyURI .
-_: sh:declare   _:prefix_insdcschema .
+_:sparql_examples_prefixes sh:declare   _:prefix_insdcschema .
 _:prefix_insdcschema 
   sh:prefix "insdcschema" ;
   sh:namespace "http://ddbj.nig.ac.jp/ontologies/nucleotide/"^^xsd:anyURI .
-_: sh:declare   _:prefix_np .
+_:sparql_examples_prefixes sh:declare   _:prefix_np .
 _:prefix_np
   sh:prefix "np" ;
   sh:namespace "http://nextprot.org/rdf#"^^xsd:anyURI .
-_: sh:declare _:prefix_nextprot .
+_:sparql_examples_prefixes sh:declare _:prefix_nextprot .
 _:prefix_nextprot
   sh:prefix "nextprot" ;
   sh:namespace "http://nextprot.org/rdf/entry/"^^xsd:anyURI .
-_: sh:declare _:prefix_wd . 
+_:sparql_examples_prefixes sh:declare _:prefix_nextprot_schema .
+_:prefix_nextprot_cv
+  sh:prefix "nextprot_cv" ;
+  sh:namespace "http://nextprot.org/rdf/terminology/"^^xsd:anyURI .
+_:sparql_examples_prefixes sh:declare _:prefix_wd . 
 _:prefix_wd 
     sh:prefix "wd" ; 
     sh:namespace "http://www.wikidata.org/entity/"^^xsd:anyURI  .
-_: sh:declare _:prefix_wdt . 
+_:sparql_examples_prefixes sh:declare _:prefix_wdt . 
 _:prefix_wdt 
     sh:prefix "wdt" ; 
     sh:namespace "http://www.wikidata.org/prop/direct/"^^xsd:anyURI  .
-_: sh:declare 
+_:sparql_examples_prefixes sh:declare 
 _:prefix_wikibase . 
     _:prefix_wikibase sh:prefix "wikibase" ; 
     sh:namespace "http://wikiba.se/ontology#"^^xsd:anyURI  .
-_: sh:declare _:prefix_p . 
+_:sparql_examples_prefixes sh:declare _:prefix_p . 
 _:prefix_p 
     sh:prefix "p" ; 
     sh:namespace "http://www.wikidata.org/prop/"^^xsd:anyURI  .
-_: sh:declare _:prefix_ps . 
+_:sparql_examples_prefixes sh:declare _:prefix_ps . 
 _:prefix_ps 
     sh:prefix "ps" ; 
     sh:namespace "http://www.wikidata.org/prop/statement/"^^xsd:anyURI  .
-_: sh:declare _:prefix_pq . 
+_:sparql_examples_prefixes sh:declare _:prefix_pq . 
 _:prefix_pq 
     sh:prefix "pq" ; 
     sh:namespace "http://www.wikidata.org/prop/qualifier/"^^xsd:anyURI  .
-_: sh:declare _:prefix_sachem .
+_:sparql_examples_prefixes sh:declare _:prefix_sachem .
 _:prefix_sachem 
     sh:prefix "sachem" ;
     sh:namespace "http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#"^^xsd:anyURI  .
-_: sh:declare _:prefix_lipidmaps .
+_:sparql_examples_prefixes sh:declare _:prefix_lipidmaps .
 _:prefix_lipidmaps
     sh:prefix "lipidmaps" ;
     sh:namespace "https://www.lipidmaps.org/rdf/"^^xsd:anyURI  .
-_: sh:declare _:prefix_eco .
+_:sparql_examples_prefixes sh:declare _:prefix_eco .
 _:prefix_eco
     sh:prefix "ECO" ;
     sh:namespace "http://purl.obolibrary.org/obo/ECO_"^^xsd:anyURI  .
-_: sh:declare _:prefix_dcterms .
+_:sparql_examples_prefixes sh:declare _:prefix_dcterms .
 _:prefix_dcterms
     sh:prefix "dcterms" ;
     sh:namespace "http://purl.org/dc/terms/"^^xsd:anyURI .
-_: sh:declare _:prefix_busco .
+_:sparql_examples_prefixes sh:declare _:prefix_busco .
 _:prefix_busco
     sh:prefix "busco" ;
     sh:namespace "http://busco.ezlab.org/schema#"^^xsd:anyURI .
