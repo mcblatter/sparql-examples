@@ -1,0 +1,26 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
+ex:60
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:comment """Find UniProtKB entries that describe human Enzymes catalyzing <a href="https://www.rhea-db.org/">Rhea</a> reactions with an optional link between the UniProt disease term and <a href="https://www.omim.org/about">OMIM</a>."""^^rdf:HTML ;
+    sh:select """SELECT DISTINCT 
+  ?protein
+  ?rhea 
+  ?disease 
+  ?xref
+WHERE {
+  ?caa up:catalyticActivity ?ca .
+  ?ca up:catalyzedReaction ?rhea .
+  ?protein up:annotation ?caa ;
+    up:organism taxon:9606 ;
+    up:annotation ?an .
+  ?an up:disease ?disease .
+  OPTIONAL {
+    ?disease rdfs:seeAlso ?xref .
+    ?xref up:database <http://purl.uniprot.org/database/MIM>
+  }
+}""" .
