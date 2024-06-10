@@ -56,16 +56,16 @@ public class CreateTestWithRDF4jMethods {
 		DESCRIBE(SHACL_DESCRIBE, (rc, q) -> rc.prepareGraphQuery(q)),
 		CONSTRUCT(SHACL.CONSTRUCT, (rc, q) -> rc.prepareGraphQuery(q));
 
-		
+
 		private final IRI iri;
 		private final BiFunction<RepositoryConnection, String, ? extends Query> pq;
 
 		QueryTypes(IRI iri, BiFunction<RepositoryConnection, String, ? extends Query> pq) {
 			this.iri = iri;
 			this.pq = pq;
-		}		
+		}
 	}
-	
+
 	static void testQueryValid(Path p, String projectPrefixes) {
 		assertTrue(Files.exists(p));
 		RDFParser rdfParser = Rio.createParser(RDFFormat.TURTLE);
@@ -97,7 +97,7 @@ public class CreateTestWithRDF4jMethods {
 		}
 		assertFalse(model.isEmpty());
 		QueryParser parser = new SPARQLParserFactory().getParser();
-		
+
 		return Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SHACL_DESCRIBE).map(
 				s -> model.getStatements(null, s, null))
 				.map(Iterable::iterator).map(i -> {
@@ -169,7 +169,7 @@ public class CreateTestWithRDF4jMethods {
 		Arrays.stream(QueryTypes.values())
 			.forEach(s -> executeAllQueryStringsInModel(projectPrefixes, parser, model, s));
 	}
-	
+
 	private static void executeAllQueryStringsInModel(String projectPrefixes, QueryParser parser, Model m, QueryTypes qt) {
 		Iterator<Statement> i = m.getStatements(null, qt.iri, null).iterator();
 		while (i.hasNext()) {
@@ -182,20 +182,25 @@ public class CreateTestWithRDF4jMethods {
 		}
 	}
 
-	
+
 	private static void executeQueryStringInValue(String projectPrefixes, QueryParser parser, Value obj, Value target, QueryTypes qt) {
 		assertNotNull(obj);
 		assertTrue(obj.isLiteral());
 		String queryStr = projectPrefixes + obj.stringValue();
-		
+
 		SPARQLRepository r = new SPARQLRepository(target.stringValue());
 		try {
 			r.init();
 			try (RepositoryConnection connection = r.getConnection()){
 				queryStr = addLimitToQuery(projectPrefixes, parser, obj, qt, queryStr);
 				Query query = qt.pq.apply(connection, queryStr);
-				query.setMaxExecutionTime(45 * 60);
+				query.setMaxExecutionTime(10 * 60);
+				long startTime = System.currentTimeMillis();
 				tryEvaluating(query);
+				long duration = System.currentTimeMillis() - startTime;
+				if (duration > 120000) {
+					fail("Query took too long: " + duration/1000 + "s on " + target.stringValue() + ": " + obj.stringValue());
+				}
 			}
 		} catch (MalformedQueryException qe) {
 			fail(qe.getMessage() + "\n" + queryStr, qe);
@@ -210,6 +215,7 @@ public class CreateTestWithRDF4jMethods {
 		}
 		if (query instanceof TupleQuery tq) {
 			try (TupleQueryResult evaluate = tq.evaluate()){
+				assertTrue(evaluate.hasNext(), "Expected at least one result but got none.");
 				if (evaluate.hasNext()) {
 					evaluate.next();
 				}
@@ -217,6 +223,7 @@ public class CreateTestWithRDF4jMethods {
 		}
 		if (query instanceof GraphQuery gq) {
 			try (GraphQueryResult evaluate = gq.evaluate()){
+				assertTrue(evaluate.hasNext(), "Expected at least one result but got none.");
 				if (evaluate.hasNext()) {
 					evaluate.next();
 				}
@@ -234,11 +241,11 @@ public class CreateTestWithRDF4jMethods {
 			if (!visitor.hasLimit) {
 				//We can add the limit at the end.
 				queryStr = projectPrefixes + obj.stringValue() + " LIMIT 1";
-			} 
+			}
 		}
 		return queryStr;
 	}
-	
+
 	private static class HasLimit extends AbstractQueryModelVisitor<RuntimeException> {
 		private boolean hasLimit = false;
 
