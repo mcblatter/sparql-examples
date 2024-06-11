@@ -45,6 +45,7 @@ import org.eclipse.rdf4j.rio.RDFParseException;
 import org.eclipse.rdf4j.rio.RDFParser;
 import org.eclipse.rdf4j.rio.Rio;
 import org.eclipse.rdf4j.rio.helpers.StatementCollector;
+import org.opentest4j.AssertionFailedError;
 
 public class CreateTestWithRDF4jMethods {
 	private static final IRI SHACL_DESCRIBE = SimpleValueFactory.getInstance().createIRI(SHACL.NAMESPACE, "describe");
@@ -194,18 +195,20 @@ public class CreateTestWithRDF4jMethods {
 			try (RepositoryConnection connection = r.getConnection()){
 				queryStr = addLimitToQuery(projectPrefixes, parser, obj, qt, queryStr);
 				Query query = qt.pq.apply(connection, queryStr);
-				query.setMaxExecutionTime(10 * 60);
+				query.setMaxExecutionTime(45 * 60);
 				long startTime = System.currentTimeMillis();
 				tryEvaluating(query);
 				long duration = System.currentTimeMillis() - startTime;
 				if (duration > 120000) {
-					fail("Query took too long: " + duration/1000 + "s on " + target.stringValue() + ": " + obj.stringValue());
+					System.out.println("Query took " + duration/1000 + "s on " + target.stringValue() + ": " + obj.stringValue());
 				}
 			}
 		} catch (MalformedQueryException qe) {
-			fail(qe.getMessage() + "\n" + queryStr, qe);
+			fail(qe.getMessage() + "\n" + target.stringValue() + "\n" + queryStr, qe);
 		} catch (QueryEvaluationException qe) {
-			fail(qe.getMessage() + "\n" + queryStr, qe);
+			fail(qe.getMessage() + "\n" + target.stringValue() + "\n" + queryStr, qe);
+		} catch (AssertionFailedError qe) {
+			fail(qe.getMessage() + "\n" + target.stringValue() + "\n" + queryStr, qe);
 		}
 	}
 

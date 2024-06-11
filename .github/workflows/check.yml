@@ -16,7 +16,4 @@ jobs:
         java-version: '21'
 
     - name: Install and run checks
-      run: mvn test
-
-    - name: Install and run queries
       run: mvn test -PallTests
